@@ -27,8 +27,14 @@ void print_game(){
     {
         for (int j = 0; j < 3; j++)
         {
-            putCh(game_easy[i][j]+'0');
-            putCh(' ');
+            if(game_easy[i][j] == 0){
+                putCh(' ');
+                putCh(' ');
+            }
+            else{
+                putCh(game_easy[i][j]+'0');
+                putCh(' ');
+            }
         }
         putString("\n\r",2);
     }
@@ -59,7 +65,7 @@ void start_memory(){
     putString("______|DEIXE NA SEQUENCIA CORRETA|______\n\r",42);
     delay(1000,TIMER7);
     while(continua){
-        clean();
+        //clean();
         pause = true;
         print_game();
         while(pause);

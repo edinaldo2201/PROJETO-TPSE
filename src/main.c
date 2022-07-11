@@ -69,34 +69,23 @@ void ISR_Handler(void){
 
 	/* Verify active IRQ number */
 	unsigned int irq_number = HWREG(INTC_BASE+INTC_SIR_IRQ) & 0x7f;
-	switch(irq_number){
-		case 62:
-			gpioIsrHandler(GPIO3,type0,21);
+	if(irq_number == 98){
+		if(HWREG(SOC_GPIO_1_REGS+GPIO_IRQSTATUS_RAW_0)&(1<<13)){
 			up();
-			putString("aqui\n\r",6);
-		break;
-
-		case 95:
-			timerIrqHandler(TIMER7);
-		break;
-		
-		case 63:
-			gpioIsrHandler(GPIO3,type1,19);
+			gpioIsrHandler(GPIO1,0,13);
+		}
+		else if(HWREG(SOC_GPIO_1_REGS+GPIO_IRQSTATUS_RAW_0)&(1<<12)){
 			down();
-			putString("aqui\n\r",6);
-		break;
-
-		case 98:
-			gpioIsrHandler(GPIO1,type0,16);
+			gpioIsrHandler(GPIO1,0,12);
+		}
+		else if(HWREG(SOC_GPIO_1_REGS+GPIO_IRQSTATUS_RAW_0)&(1<<15)){
 			left();
-			putString("aqui\n\r",6);
-		break;
-
-		case 99:
-			gpioIsrHandler(GPIO1,type1,17);
+			gpioIsrHandler(GPIO1,0,15);
+		}
+		else if(HWREG(SOC_GPIO_1_REGS+GPIO_IRQSTATUS_RAW_0)&(1<<14)){
 			right();
-			putString("aqui\n\r",6);
-		break;
+			gpioIsrHandler(GPIO1,0,14);
+		}
 	}
     
 	/* acknowledge IRQ */
